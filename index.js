@@ -4,6 +4,25 @@ const port = 3000;
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
+app.get("/", (req, res) => {
+  res.send("Still alive!")
+})
+
+// URL a la que se hará la petición cada 10 minutos
+const URL_OBJETIVO = "https://bot-armada-sc.onrender.com";
+
+// Función para hacer la petición
+const hacerPeticion = async () => {
+    try {
+        const respuesta = await axios.get(URL_OBJETIVO);
+        console.log(`Petición exitosa:`, respuesta.data);
+    } catch (error) {
+        console.error(`Error en la petición:`, error.message);
+    }
+};
+
+// Inicia el intervalo cada 10 minutos (600,000 ms)
+setInterval(hacerPeticion, 600000);
 
 const {
   Client,
